@@ -16,6 +16,14 @@ public class SmartCarDecoder extends ByteToMessageDecoder {
      * 基本长度=协议开始的标志(一个int类型4个字节)+数据的长度(一个int类型4个字节)
      */
     public final int  BASE_LENGTH= 4+4;
+
+    /**
+     * 该方法中，如果return null的话，则代表继续等待数据发送过来
+     * @param channelHandlerContext
+     * @param byteBuf
+     * @param list
+     * @throws Exception
+     */
     protected void decode(ChannelHandlerContext channelHandlerContext,
                           ByteBuf byteBuf, List<Object> list) throws Exception {
         //可读长度必须要大于基本长度

@@ -11,6 +11,9 @@ import ljx.ashin.protocol.SmartCarProtocol;
 public class MyClientHandler extends SimpleChannelInboundHandler<SmartCarProtocol> {
     protected void messageReceived(ChannelHandlerContext channelHandlerContext,
                                    SmartCarProtocol smartCarProtocol) throws Exception {
+        byte[] content = smartCarProtocol.getContent();
+        String msg = new String(content);
+        System.out.println("获取到的服务器的信息为："+msg);
 
     }
 }

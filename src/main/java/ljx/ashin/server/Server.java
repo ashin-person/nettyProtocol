@@ -56,9 +56,14 @@ public class Server {
             if (channelFuture.isSuccess()){
                 System.out.println("服务器启动成功");
             }
+            Thread.sleep(30*60*1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public static void main(String[] args) {
+        Server server = new Server(8765);
     }
 }
