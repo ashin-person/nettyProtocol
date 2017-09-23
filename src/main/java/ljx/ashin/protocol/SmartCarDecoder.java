@@ -27,6 +27,7 @@ public class SmartCarDecoder extends ByteToMessageDecoder {
     protected void decode(ChannelHandlerContext channelHandlerContext,
                           ByteBuf byteBuf, List<Object> list) throws Exception {
         //可读长度必须要大于基本长度
+        System.out.println("SmartCarDecoder#decode");
         if (byteBuf.readableBytes()>=BASE_LENGTH){
 
             //防止socket字节流攻击

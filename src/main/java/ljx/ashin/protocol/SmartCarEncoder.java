@@ -12,8 +12,9 @@ public class SmartCarEncoder extends MessageToByteEncoder<SmartCarProtocol>{
 
     protected void encode(ChannelHandlerContext channelHandlerContext,
                           SmartCarProtocol smartCarProtocol, ByteBuf byteBuf) throws Exception {
-        byteBuf.writeByte(smartCarProtocol.getHeaderStartFlag());
-        byteBuf.writeByte(smartCarProtocol.getLength());
+        System.out.println("SmartCarEncoder#encode");
+        byteBuf.writeInt(smartCarProtocol.getHeaderStartFlag());
+        byteBuf.writeInt(smartCarProtocol.getLength());
         byteBuf.writeBytes(smartCarProtocol.getContent());
 
     }
