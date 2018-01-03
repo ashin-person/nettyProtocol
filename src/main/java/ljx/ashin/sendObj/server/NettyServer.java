@@ -3,6 +3,7 @@ package ljx.ashin.sendObj.server;
 import com.sun.corba.se.internal.CosNaming.BootstrapServer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -49,6 +50,17 @@ public class NettyServer {
                 channel.pipeline().addLast(new ServerHandler());
             }
         });
+
+        try {
+            ChannelFuture channelFuture = serverBootstrap.bind(port).sync();//绑定端口
+            if (channelFuture.isSuccess()){
+                System.out.println("服务器启动成功");
+            }
+            channelFuture.channel().closeFuture().sync();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 }
