@@ -17,6 +17,7 @@ public class ObjEncoder extends MessageToByteEncoder<Person> {
                           Person person, ByteBuf byteBuf) throws Exception {
         //将object转换byte[]
 //        ByteArrayInputStream
+        System.out.println("ObjEncoder编码器");
         byte[] bytes = ConvertUtils.ObjToBytes(person);
         byteBuf.writeBytes(bytes);
         channelHandlerContext.flush();//输出

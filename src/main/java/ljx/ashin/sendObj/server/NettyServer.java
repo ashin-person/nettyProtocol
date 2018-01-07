@@ -8,6 +8,7 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import ljx.ashin.sendObj.client.NettyClient;
 import ljx.ashin.sendObj.coder.ObjDecoder;
 import ljx.ashin.sendObj.coder.ObjEncoder;
 import ljx.ashin.sendObj.handler.ServerHandler;
@@ -62,5 +63,10 @@ public class NettyServer {
             e.printStackTrace();
         }
 
+    }
+
+    public static void main(String[] args) {
+        NettyServer server = new NettyServer();
+        server.initServer(8899);
     }
 }

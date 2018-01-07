@@ -1,5 +1,6 @@
 package ljx.ashin.sendObj.utils;
 
+import io.netty.buffer.ByteBuf;
 import ljx.ashin.sendObj.bean.Person;
 
 import java.io.*;
@@ -9,6 +10,16 @@ import java.io.*;
  * Created by AshinLiang on 2018/1/1.
  */
 public class ConvertUtils {
+    /**
+     * 将ByteBuf转换为byte[]
+     * @param byteBuf
+     * @return
+     */
+    public static byte[] byteBufToBytes(ByteBuf byteBuf){
+        byte[] bytes = new byte[byteBuf.readableBytes()];
+        byteBuf.readBytes(bytes);
+        return bytes;
+    }
     /**
      * 对象转化为字节数组
      * @param object
@@ -54,9 +65,11 @@ public class ConvertUtils {
         ByteArrayInputStream byteArrayInputStream = null;
         ObjectInputStream objectInputStream = null;
         try{
-            byteArrayInputStream = new ByteArrayInputStream(bytes);
-            objectInputStream = new ObjectInputStream(byteArrayInputStream);
-            obj = objectInputStream.readObject();
+            if (bytes == null){
+                byteArrayInputStream = new ByteArrayInputStream(bytes);
+                objectInputStream = new ObjectInputStream(byteArrayInputStream);
+                obj = objectInputStream.readObject();
+            }
         }catch (Exception e){
             e.printStackTrace();
         }finally {
