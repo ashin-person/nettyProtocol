@@ -70,6 +70,9 @@ public class Client {
                             msg.getBytes());
                     channelFuture.channel().writeAndFlush(smartCarProtocol);
                 }
+                /*String clientMsg = "客户端的请求信息";
+                SmartCarProtocol smartCarProtocol = new SmartCarProtocol(clientMsg.getBytes().length,clientMsg.getBytes());
+                channelFuture.channel().writeAndFlush(smartCarProtocol);*/
 
             }
         } catch (Exception e) {
