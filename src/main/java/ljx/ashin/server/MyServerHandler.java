@@ -18,6 +18,7 @@ public class MyServerHandler extends SimpleChannelInboundHandler<SmartCarProtoco
         SmartCarProtocol msgScp = new SmartCarProtocol(msg.getBytes().length,msg.getBytes());
         channelHandlerContext.write(msgScp);
         Long endTime = System.currentTimeMillis();
+        channelHandlerContext.flush();
 
     }
 }

@@ -53,8 +53,9 @@ public class ClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
      */
     protected void messageReceived(ChannelHandlerContext channelHandlerContext, ByteBuf buf) throws Exception {
         System.out.println("客户端的messageReceived");
-        byte[] bytes = buf.array();
-        System.out.println("获取到的服务器的信息为："+buf);
+        byte[] bytes = ConvertUtils.byteBufToBytes(buf);
+        Person person = (Person) ConvertUtils.bytesToObj(bytes);
+        System.out.println("获取到的服务器的信息为："+person.getName());
     }
 
 

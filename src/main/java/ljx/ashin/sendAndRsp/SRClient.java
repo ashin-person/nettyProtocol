@@ -1,4 +1,4 @@
-package ljx.ashin.sendObj.client;
+package ljx.ashin.sendAndRsp;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -7,18 +7,11 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import ljx.ashin.nt.Person;
-import ljx.ashin.protocol.SmartCarProtocol;
-import ljx.ashin.sendObj.coder.ObjEncoder;
-import ljx.ashin.sendObj.handler.ClientHandler;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
 /**
- * Created by AshinLiang on 2018/1/3.
+ * Created by Ashin Liang on 2018/1/8.
  */
-public class NettyClient {
+public class SRClient {
 
     private  String connecting;//连接串
     private int port;//端口号
@@ -37,8 +30,9 @@ public class NettyClient {
         bootstrap.option(ChannelOption.TCP_NODELAY,true);//不延迟发送
         bootstrap.handler(new ChannelInitializer<Channel>() {
             protected void initChannel(Channel channel) throws Exception {
-                channel.pipeline().addLast(new ObjEncoder());
-                channel.pipeline().addLast(new ClientHandler());
+                channel.pipeline().addLast(new SREncoder());//处理发送出去的数据，将发送出去的数据编码
+                channel.pipeline().addLast(new SRDecoder());//数据解码
+                channel.pipeline().addLast(new SREncoderClientHandler());//处理得到的数据
             }
         });
 
@@ -47,22 +41,10 @@ public class NettyClient {
             ChannelFuture channelFuture = bootstrap.connect(connecting,port).sync();
             if (channelFuture.isSuccess()){
                 System.out.println("客户端连接服务器成功");
-                Person person = new Person();
-                person.setName("ashin");
-                channelFuture.channel().writeAndFlush(person);
             }
-            /*if (channelFuture.isSuccess()){
-                System.out.println("客户端连接服务器成功");
-//                BufferedReader bufferedReader = null;
-                *//*while (true){
-                    System.out.println("请输入要发送的信息");
-                    InputStreamReader isr = new InputStreamReader(System.in);
-                    bufferedReader = new BufferedReader(isr);
-                    String msg = bufferedReader.readLine();
-                    channelFuture.channel().writeAndFlush(msg);
-                }*//*
-            }*/
-            // • 最后关闭EventLoopGroup来释放资源
+            SRObject srObject = new SRObject();
+            srObject.setMsg("发送正式信息");
+            channelFuture.channel().writeAndFlush(srObject);
             channelFuture.channel().closeFuture().sync();
         }catch (Exception e){
             e.printStackTrace();
@@ -70,7 +52,7 @@ public class NettyClient {
     }
 
     public static void main(String[] args) {
-        NettyClient client = new NettyClient();
-        client.initClient("127.0.0.1",8899);
+        SRClient client = new SRClient();
+        client.initClient("127.0.0.1",8898);
     }
 }
